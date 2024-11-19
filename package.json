@@ -1,0 +1,12 @@
+{
+  "name": "hospital-management-app",
+  "version": "1.0.0",
+  "description": "Desktop application for hospital management",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^your-electron-version"
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receptionist Panel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="receptionist-panel">
+    <h1>Patient Registration</h1>
+    <form id="patient-form">
+      <label for="patient-name">Name:</label>
+      <input type="text" id="patient-name" required>
+
+      <label for="patient-age">Age:</label>
+      <input type="number" id="patient-age" required>
+
+      <label for="patient-sex">Sex:</label>
+      <select id="patient-sex" required>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="patient-phone">Phone Number:</label>
+      <input type="tel" id="patient-phone" required>
+
+      <label for="doctor-select">Doctor:</label>
+      <select id="doctor-select" required></select>
+      <p id="doctor-fee"></p>
+
+      <label for="service-select">Select Service(s):</label>
+      <select id="service-select" multiple>
+        <!-- Services will be loaded here -->
+      </select>
+
+      <button type="submit">Register Patient</button>
+    </form>
+
+    <!-- Display patient details after registration -->
+    <div id="patient-details">
+      <h2>Patient Details</h2>
+      <p id="patient-info"></p>
+      <div id="fees-info"></div>
+      <p><strong>Total Expense:</strong> $<span id="total-expense">0.00</span></p>
+      <button id="print-slip-btn" style="display: none;" onclick="printSlip()">Print Slip</button>
+    </div>
+    
+    <div id="message"></div>
+  </div>
+
+  <script src="receptionist.js"></script>
+</body>
+</html>

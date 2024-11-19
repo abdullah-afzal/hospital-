@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="login-form">
+    <h1>Admin Login</h1>
+    <form id="admin-login">
+      <label for="password">Password:</label>
+      <input type="password" id="password" required>
+      <button type="button" onclick="checkPassword()">Login</button>
+    </form>
+    <!-- Error message will be shown here -->
+  </div>
+  
+
+  <div id="admin-panel" style="display:none;">
+    <button id="sign-out-btn" onclick="signOut()">Sign Out</button>
+
+    <h1>Admin Panel</h1>
+
+    <!-- Change Password Section -->
+    <h2>Change Password</h2>
+    <form id="change-password-form">
+      <label for="old-password">Old Password:</label>
+      <input type="password" id="old-password" required>
+      <label for="new-password">New Password:</label>
+      <input type="password" id="new-password" required>
+      <label for="confirm-password">Confirm New Password:</label>
+      <input type="password" id="confirm-password" required>
+      <button type="button" onclick="changePassword()">Change Password</button>
+    </form>
+
+    <!-- Doctor Section -->
+    <h2>Manage Doctors</h2>
+    <form id="doctor-form">
+      <label for="doctor-name">Doctor Name:</label>
+      <input type="text" id="doctor-name" required>
+      <label for="specialization">Specialization:</label>
+      <input type="text" id="specialization" required>
+      <label for="fee">Fee:</label>
+      <input type="number" id="fee" required>
+      <button type="button" onclick="addDoctor()">Add Doctor</button>
+    </form>
+
+    <h2>Doctor List</h2>
+    <ul id="doctor-list"></ul>
+
+    <!-- Update Doctor Form -->
+    <div id="update-doctor-form" style="display:none;">
+      <h3>Update Doctor</h3>
+      <input type="hidden" id="update-doctor-id">
+      <label for="update-doctor-name">Doctor Name:</label>
+      <input type="text" id="update-doctor-name">
+      <label for="update-specialization">Specialization:</label>
+      <input type="text" id="update-specialization">
+      <label for="update-fee">Fee:</label>
+      <input type="number" id="update-fee">
+      <button type="button" onclick="updateDoctor()">Update Doctor</button>
+    </div>
+
+    <!-- User Section -->
+    <h2>Manage Users</h2>
+    <form id="user-form">
+      <label for="user-name">User Name:</label>
+      <input type="text" id="user-name" required>
+      <label for="user-password">Password:</label>
+      <input type="text" id="user-password" required>
+      <button type="button" onclick="addUser()">Add User</button>
+    </form>
+
+    <h2>User List</h2>
+    <ul id="user-list"></ul>
+
+     <!-- Update User Form -->
+<div id="update-user-form" style="display:none;">
+  <h3>Update User</h3>
+  <input type="hidden" id="update-user-id">
+  <label for="update-user-name">User Name:</label>
+  <input type="text" id="update-user-name">
+  <label for="update-user-password">Password:</label>
+  <input type="text" id="update-user-password">
+  <button type="button" onclick="updateUser()">Update User</button>
+</div>
+
+
+    <!-- Service Section -->
+    <h2>Manage Services</h2>
+    <form id="service-form">
+      <label for="service-name">Service Name:</label>
+      <input type="text" id="service-name" required>
+      <label for="service-description">Description:</label>
+      <input type="text" id="service-description" required>
+      <label for="service-fee">Fee:</label>
+      <input type="number" id="service-fee" required>
+      <button type="button" onclick="addService()">Add Service</button>
+    </form>
+
+    <h2>Service List</h2>
+    <ul id="service-list"></ul>
+
+    <!-- Update Service Form -->
+    <div id="update-service-form" style="display:none;">
+      <h3>Update Service</h3>
+      <input type="hidden" id="update-service-id">
+      <label for="update-service-name">Service Name:</label>
+      <input type="text" id="update-service-name">
+      <label for="update-service-description">Description:</label>
+      <input type="text" id="update-service-description">
+      <label for="update-service-fee">Fee:</label>
+      <input type="number" id="update-service-fee">
+      <button type="button" onclick="updateService()">Update Service</button>
+    </div>
+
+    <script src="admin.js"></script>
+  </div>
+
+  <script>
+    // Sign out function
+    function signOut() {
+      document.getElementById('login-form').style.display = 'block'; // Show login form
+      document.getElementById('admin-panel').style.display = 'none'; // Hide admin panel
+    }
+  </script>
+</body>
+</html>
