@@ -33,3 +33,14 @@ ipcMain.on('open-receptionist-panel', () => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
+
+let userSession = null;
+
+ipcMain.handle('set-session', (event, user) => {
+  userSession = user;
+});
+
+ipcMain.handle('get-session', () => {
+  return userSession;
+});
+

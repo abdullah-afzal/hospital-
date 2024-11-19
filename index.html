@@ -2,13 +2,23 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hospital Management - Role Selection</title>
+  <title>Hospital Management</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Select Role</h1>
-  <button onclick="openAdminPanel()">Admin Panel</button>
-  <button onclick="openReceptionistPanel()">Receptionist Panel</button>
+  <div class="login-form">
+    <h1>Login</h1>
+    <form onsubmit="return checkPassword(event)">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+      
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+      
+      <button type="submit">Login</button>
+    </form>
+    <p id="login-error"></p>
+  </div>
 </body>
 <script src="renderer.js"></script>
 </html>

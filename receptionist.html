@@ -1,55 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Receptionist Panel</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Receptionist Panle</title>
+  <link rel="stylesheet" href="receptionist.css">
 </head>
+
 <body>
-  <div id="receptionist-panel">
-    <h1>Patient Registration</h1>
-    <form id="patient-form">
-      <label for="patient-name">Name:</label>
-      <input type="text" id="patient-name" required>
-
-      <label for="patient-age">Age:</label>
-      <input type="number" id="patient-age" required>
-
-      <label for="patient-sex">Sex:</label>
-      <select id="patient-sex" required>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-      </select>
-
-      <label for="patient-phone">Phone Number:</label>
-      <input type="tel" id="patient-phone" required>
-
-      <label for="doctor-select">Doctor:</label>
-      <select id="doctor-select" required></select>
-      <p id="doctor-fee"></p>
-
-      <label for="service-select">Select Service(s):</label>
-      <select id="service-select" multiple>
-        <!-- Services will be loaded here -->
-      </select>
-
-      <button type="submit">Register Patient</button>
-    </form>
-
-    <!-- Display patient details after registration -->
-    <div id="patient-details">
-      <h2>Patient Details</h2>
-      <p id="patient-info"></p>
-      <div id="fees-info"></div>
-      <p><strong>Total Expense:</strong> $<span id="total-expense">0.00</span></p>
-      <button id="print-slip-btn" style="display: none;" onclick="printSlip()">Print Slip</button>
+  <div id="receptionist-panel" class="receptionist-panel">
+    <div class="sidebar">
+      <h2 class="sidebar-title">Receptionist Panel</h2>
+      <ul class="sidebar-menu">
+        <li><button class="sidebar-btn" onclick="showSection('generate-receipt')">Generate Receipt</button></li>
+        <li><button class="sidebar-btn" onclick="showSection('settings')">Settings</button></li>
+        <li><button class="sidebar-btn" onclick="signOut(`Sign Out Successfuly`)">Sign Out</button></li>
+      </ul>
     </div>
-    
-    <div id="message"></div>
+
+    <div class="main-content">
+      <div id="generate-receipt" class="section" style="display: block;">
+        <h1>Generate Receipt</h1>
+        <div>
+        <form id="patient-form">
+          <label for="patient-name">Name:</label>
+          <input type="text" id="patient-name" required>
+
+          <label for="patient-age">Age:</label>
+          <input type="number" id="patient-age" required>
+
+          <label for="patient-gender">Gender:</label>
+          <select id="patient-gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <label for="patient-phone">Phone Number:</label>
+          <input type="tel" id="patient-phone" required>
+
+          <label for="doctor-select">Doctor:</label>
+          <select id="doctor-select" required></select>
+          <p id="doctor-fee"></p>
+
+          <label for="service-select">Select Service(s):</label>
+          <select id="service-select" multiple>
+            <!-- Services will be loaded here -->
+          </select>
+
+          <button type="submit">Generate Receipt</button>
+        </form>
+
+        <!-- Display patient details after registration -->
+        <div id="summary">
+          <h2>Summary</h2>
+          <p id="patient-info"></p>
+          <div id="fees-info"></div>
+          <p><strong>Total Expense:</strong> $<span id="total-expense">0.00</span></p>
+          <button id="print-slip-btn" style="display: none;" onclick="printSlip()">Print Slip</button>
+        </div>
+      </div>
+
+        <div id="message"></div>
+      </div>
+
+      <div id="settings" class="section" style="display:none;">
+        <h2>Change Password</h2>
+        <form id="change-password-form" class="form">
+          <label for="old-password" class="form-label">Old Password:</label>
+          <input type="password" id="old-password" class="form-input" required>
+          <label for="new-password" class="form-label">New Password:</label>
+          <input type="password" id="new-password" class="form-input" required>
+          <label for="confirm-password" class="form-label">Confirm New Password:</label>
+          <input type="password" id="confirm-password" class="form-input" required>
+          <button type="button" class="form-button" onclick="changePassword()">Change Password</button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="receptionist.js"></script>
+  <script>
+    // Show specific section based on the option selected from sidebar
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => section.style.display = 'none');
+
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
+    }
+
+  </script>
 </body>
+
 </html>

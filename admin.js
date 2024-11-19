@@ -1,99 +1,87 @@
+const { ipcRenderer } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const doctorsFilePath = path.join(__dirname, 'data', 'doctors.json');
 const servicesFilePath = path.join(__dirname, 'data', 'services.json');
 const usersFilePath = path.join(__dirname, 'data', 'users.json');
-const passwordFilePath = path.join(__dirname, 'data', 'password.json');  // New file to store password
 
-let currentPassword = 'admin123';  // Default password
-
-// Check if a password file exists, if it does, load the password from it
-fs.readFile(passwordFilePath, 'utf8', (err, data) => {
-  if (!err && data) {
-    const storedPassword = JSON.parse(data);
-    currentPassword = storedPassword.password;
-  }
-});
-
-// Show the login form initially
-document.getElementById('login-form').style.display = 'block';
-document.getElementById('admin-panel').style.display = 'none';
-
-document.getElementById('admin-login').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();  // Prevent the default form submission behavior
-    checkPassword();  // Trigger the checkPassword function manually
-  }
-});
-// Check the entered password
-function checkPassword() {
-  const enteredPassword = document.getElementById('password').value;
-  
-  // Check if the password is empty
-  if (!enteredPassword) {
-    displayError('Password cannot be empty.');
-    
-    return;
-  }
-
-  if (enteredPassword === currentPassword) {
-    document.getElementById('password').value='';
-    displayError('');
-    document.getElementById('login-form').style.display = 'none';  // Hide login form
-    document.getElementById('admin-panel').style.display = 'block';  // Show admin panel
-    loadDoctors(); // Load the doctors when admin is logged in
-    loadServices(); // Load the services when admin is logged in
-    loadUsers();
-  } else {
-    displayError('Incorrect password. Please try again.');
-  }
-}
-
-// Display error message
-function displayError(message) {
-  const errorElement = document.getElementById('login-error');
-  if (!errorElement) {
-    const errorDiv = document.createElement('div');
-    errorDiv.id = 'login-error';
-    errorDiv.style.color = 'red';
-    errorDiv.innerText = message;
-    document.getElementById('login-form').prepend(errorDiv);  // Add error message at the top of the form
-  } else {
-    errorElement.innerText = message;  // Update existing error message
-  }
-}
+// const user = await ipcRenderer.invoke('get-session');
 
 // Change the admin password
-function changePassword() {
-  const oldPassword = document.getElementById('old-password').value;
-  const newPassword = document.getElementById('new-password').value;
-  const confirmPassword = document.getElementById('confirm-password').value;
-
-  // Check if the old password matches the current password
-  if (oldPassword !== currentPassword) {
-    alert('Old password is incorrect.');
-    return;
-  }
-
-  // Check if the new password and confirmation password match
-  if (newPassword !== confirmPassword) {
-    alert('New password and confirmation password do not match.');
-    return;
-  }
-
-  // Save the new password in the password file
-  currentPassword = newPassword;
-  const newPasswordData = { password: newPassword };
-
-  fs.writeFile(passwordFilePath, JSON.stringify(newPasswordData, null, 2), (err) => {
-    if (err) {
-      alert('Error saving the new password.');
-      console.error(err);
+async function changePassword() {
+  
+  try {
+    const user = await ipcRenderer.invoke('get-session');
+    if (!user) {
+      alert('User session not found. Please log in again.');
+      window.location.href = 'login.html';
       return;
     }
 
-    alert('Password changed successfully!');
-  });
+    const oldPassword = document.getElementById('old-password').value.trim();
+    const newPassword = document.getElementById('new-password').value.trim();
+    const confirmPassword = document.getElementById('confirm-password').value.trim();
+
+    // Validate input fields
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      alert('All fields are required.');
+      return;
+    }
+
+    // Check if the old password matches the current password
+    if (oldPassword !== user.password) {
+      alert('Old password is incorrect.');
+      return;
+    }
+
+    // Check if the new password and confirmation password match
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirmation password do not match.');
+      return;
+    }
+
+    // Read the users.json file
+    fs.readFile(usersFilePath, 'utf8', (err, data) => {
+      if (err) {
+        alert('Error reading user data.');
+        console.error(err);
+        return;
+      }
+
+      let users;
+      try {
+        users = JSON.parse(data);
+      } catch (parseError) {
+        alert('Error processing user data.');
+        console.error(parseError);
+        return;
+      }
+
+      // Find the user in the file
+      const userIndex = users.findIndex((u) => u.username === user.username);
+      if (userIndex === -1) {
+        alert('User not found.');
+        return;
+      }
+
+      // Update the password for the user
+      users[userIndex].password = newPassword;
+
+      // Write the updated users back to the file
+      fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), (writeError) => {
+        if (writeError) {
+          alert('Error saving the new password.');
+          console.error(writeError);
+          return;
+        }
+
+        alert('Password changed successfully!');
+      });
+    });
+  } catch (error) {
+    console.error('Unexpected error:', error);
+    alert('An unexpected error occurred. Please try again.');
+  }
 }
 
 // Load and display doctors
@@ -142,7 +130,7 @@ function displayUsers(users) {
   userList.innerHTML = '';
   users.forEach((user, index) => {
     const li = document.createElement('li');
-    li.innerHTML = `${user.name} 
+    li.innerHTML = `${user.username} 
                     <button onclick="deleteUser(${index})">Delete</button>`;
     userList.appendChild(li);
   });
@@ -272,10 +260,16 @@ function deleteDoctor(index) {
 //add a new user
 
 function addUser() {
-  const name = document.getElementById('user-name').value;
+  const username = document.getElementById('user-name').value;
   const password = document.getElementById('user-password').value;
+  const role = document.getElementById('user-role').value;
 
-  const newUser = { name, password };
+  if (!username || !password || !role) {
+    alert('Please fill all fields.');
+    return;
+  }
+
+  const newUser = { username, password, isAdmin: role=="true" };
 
   fs.readFile(usersFilePath, 'utf8', (err, data) => {
     const users = data ? JSON.parse(data) : [];
@@ -283,10 +277,14 @@ function addUser() {
 
     fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), (err) => {
       if (err) throw err;
-      loadUsers(); // Reload the doctor list after adding
+      alert('User added successfully!');
+      document.getElementById('user-name').value="";
+      document.getElementById('user-password').value="";
+      loadUsers(); // Reload the user list
     });
   });
 }
+
 
 //update user
 
@@ -299,7 +297,7 @@ function editUser(index) {
     const user = users[index];
 
     document.getElementById('update-user-id').value = index;
-    document.getElementById('update-user-name').value = user.name;
+    document.getElementById('update-user-name').value = user.username;
     document.getElementById('update-user-password').value = user.password;
 
     document.getElementById('update-user-form').style.display = 'block';
@@ -309,14 +307,14 @@ function editUser(index) {
 // Update a user
 function updateUser() {
   const index = document.getElementById('update-user-id').value;
-  const name = document.getElementById('update-user-name').value;
+  const username = document.getElementById('update-user-name').value;
   const password = document.getElementById('update-user-password').value;
 
   fs.readFile(usersFilePath, 'utf8', (err, data) => {
     if (err) return console.error(err);
 
     const users = data ? JSON.parse(data) : [];
-    users[index] = { name, password };
+    users[index] = { username, password };
 
     fs.writeFile(usersFilePath, JSON.stringify(users, null, 2), (err) => {
       if (err) throw err;
@@ -362,3 +360,17 @@ function addService() {
 }
 
 // Edit and delete doctors and services logic remains the same
+
+
+
+
+
+///signout
+function signOut() {
+  window.location.href = 'index.html';
+  alert('Signed out successfully.');
+}
+
+loadDoctors();
+loadUsers();
+loadServices();

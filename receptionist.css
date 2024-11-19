@@ -1,0 +1,309 @@
+/* General body and layout styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+  }
+  
+  .receptionist-panel {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sidebar-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar-btn:hover {
+    background-color: #575757;
+  }
+  
+  /* Main content area */
+  #main-content {
+    margin-left: 200px;
+    padding: 20px;
+    width: 100%;
+  }
+
+  /* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+  }
+  
+  .admin-panel {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .sidebar-title {
+    font-size: 24px;
+    margin-bottom: 30px;
+  }
+  
+  .sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .sidebar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar-btn:hover {
+    background-color: #575757;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+  }
+  
+  .section {
+    display: none;
+  }
+  
+  .form {
+    margin-bottom: 20px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .form-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-button:hover {
+    background-color: #45a049;
+  }
+  
+  .list {
+    padding-left: 20px;
+  }
+  
+  .list li {
+    list-style-type: square;
+  }
+  
+  .sign-out-button {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .sign-out-button:hover {
+    background-color: #e53935;
+  }
+  
+  
+  h1 {
+    color: #333;
+  }
+  
+  form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  /* Form styling */
+  label {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #555;
+    display: block;
+  }
+  
+  input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border: none;
+    font-size: 1rem;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Patient details section */
+  #summary {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  #patient-details h2 {
+    margin-top: 0;
+  }
+  
+  #total-expense {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  /* Error and message display */
+  #message {
+    color: red;
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  
+  #print-slip-btn {
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  
+  #print-slip-btn:hover {
+    background-color: #0056b3;
+  }
+  
+
+  #patient-form, #summary {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  #patient-form {
+    border-right: 1px solid #ccc;
+  }
+  
+  #summary {
+    display: none; /* Initially hide the summary */
+  }
+  
+  #patient-form label,
+  #patient-form input,
+  #patient-form select {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  #summary {
+    margin-left: 20px;
+  }
+  
+  #summary h2 {
+    font-size: 20px;
+  }
+  
+  #summary p {
+    font-size: 16px;
+  }
+  
+  #summary button {
+    margin-top: 10px;
+  }
+  
+  #patient-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #summary {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #patient-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  

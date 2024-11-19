@@ -2,128 +2,141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
 </head>
 <body>
-  <div id="login-form">
-    <h1>Admin Login</h1>
-    <form id="admin-login">
-      <label for="password">Password:</label>
-      <input type="password" id="password" required>
-      <button type="button" onclick="checkPassword()">Login</button>
-    </form>
-    <!-- Error message will be shown here -->
-  </div>
-  
-
-  <div id="admin-panel" style="display:none;">
-    <button id="sign-out-btn" onclick="signOut()">Sign Out</button>
-
-    <h1>Admin Panel</h1>
-
-    <!-- Change Password Section -->
-    <h2>Change Password</h2>
-    <form id="change-password-form">
-      <label for="old-password">Old Password:</label>
-      <input type="password" id="old-password" required>
-      <label for="new-password">New Password:</label>
-      <input type="password" id="new-password" required>
-      <label for="confirm-password">Confirm New Password:</label>
-      <input type="password" id="confirm-password" required>
-      <button type="button" onclick="changePassword()">Change Password</button>
-    </form>
-
-    <!-- Doctor Section -->
-    <h2>Manage Doctors</h2>
-    <form id="doctor-form">
-      <label for="doctor-name">Doctor Name:</label>
-      <input type="text" id="doctor-name" required>
-      <label for="specialization">Specialization:</label>
-      <input type="text" id="specialization" required>
-      <label for="fee">Fee:</label>
-      <input type="number" id="fee" required>
-      <button type="button" onclick="addDoctor()">Add Doctor</button>
-    </form>
-
-    <h2>Doctor List</h2>
-    <ul id="doctor-list"></ul>
-
-    <!-- Update Doctor Form -->
-    <div id="update-doctor-form" style="display:none;">
-      <h3>Update Doctor</h3>
-      <input type="hidden" id="update-doctor-id">
-      <label for="update-doctor-name">Doctor Name:</label>
-      <input type="text" id="update-doctor-name">
-      <label for="update-specialization">Specialization:</label>
-      <input type="text" id="update-specialization">
-      <label for="update-fee">Fee:</label>
-      <input type="number" id="update-fee">
-      <button type="button" onclick="updateDoctor()">Update Doctor</button>
+  <div id="admin-panel" class="admin-panel">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2 class="sidebar-title">Admin Panel</h2>
+      <ul class="sidebar-menu">
+        <li><button class="sidebar-btn" onclick="showSection('change-password')">Change Password</button></li>
+        <li><button class="sidebar-btn" onclick="showSection('manage-doctors')">Manage Doctors</button></li>
+        <li><button class="sidebar-btn" onclick="showSection('manage-users')">Manage Users</button></li>
+        <li><button class="sidebar-btn" onclick="showSection('manage-services')">Manage Services</button></li>
+        <li><button class="sidebar-btn" onclick="signOut()">Sign Out</button></li>
+      </ul>
     </div>
 
-    <!-- User Section -->
-    <h2>Manage Users</h2>
-    <form id="user-form">
-      <label for="user-name">User Name:</label>
-      <input type="text" id="user-name" required>
-      <label for="user-password">Password:</label>
-      <input type="text" id="user-password" required>
-      <button type="button" onclick="addUser()">Add User</button>
-    </form>
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <h1>Wellcome to Admin Dashboard</h1>
 
-    <h2>User List</h2>
-    <ul id="user-list"></ul>
+      <div id="change-password" class="section" style="display:none;">
+        <h2>Change Password</h2>
+        <form id="change-password-form" class="form">
+          <label for="old-password" class="form-label">Old Password:</label>
+          <input type="password" id="old-password" class="form-input" required>
+          <label for="new-password" class="form-label">New Password:</label>
+          <input type="password" id="new-password" class="form-input" required>
+          <label for="confirm-password" class="form-label">Confirm New Password:</label>
+          <input type="password" id="confirm-password" class="form-input" required>
+          <button type="button" class="form-button" onclick="changePassword()">Change Password</button>
+        </form>
+      </div>
 
-     <!-- Update User Form -->
-<div id="update-user-form" style="display:none;">
-  <h3>Update User</h3>
-  <input type="hidden" id="update-user-id">
-  <label for="update-user-name">User Name:</label>
-  <input type="text" id="update-user-name">
-  <label for="update-user-password">Password:</label>
-  <input type="text" id="update-user-password">
-  <button type="button" onclick="updateUser()">Update User</button>
-</div>
+      <div id="manage-doctors" class="section" style="display:none;">
+        <h2>Manage Doctors</h2>
+        <form id="doctor-form" class="form">
+          <label for="doctor-name" class="form-label">Doctor Name:</label>
+          <input type="text" id="doctor-name" class="form-input" required>
+          <label for="specialization" class="form-label">Specialization:</label>
+          <input type="text" id="specialization" class="form-input" required>
+          <label for="fee" class="form-label">Fee:</label>
+          <input type="number" id="fee" class="form-input" required>
+          <button type="button" class="form-button" onclick="addDoctor()">Add Doctor</button>
+        </form>
 
+        <h3>Doctor List</h3>
+        <ul id="doctor-list" class="list"></ul>
 
-    <!-- Service Section -->
-    <h2>Manage Services</h2>
-    <form id="service-form">
-      <label for="service-name">Service Name:</label>
-      <input type="text" id="service-name" required>
-      <label for="service-description">Description:</label>
-      <input type="text" id="service-description" required>
-      <label for="service-fee">Fee:</label>
-      <input type="number" id="service-fee" required>
-      <button type="button" onclick="addService()">Add Service</button>
-    </form>
+        <div id="update-doctor-form" class="form-container" style="display:none;">
+          <h3>Update Doctor</h3>
+          <input type="hidden" id="update-doctor-id">
+          <label for="update-doctor-name" class="form-label">Doctor Name:</label>
+          <input type="text" id="update-doctor-name" class="form-input">
+          <label for="update-specialization" class="form-label">Specialization:</label>
+          <input type="text" id="update-specialization" class="form-input">
+          <label for="update-fee" class="form-label">Fee:</label>
+          <input type="number" id="update-fee" class="form-input">
+          <button type="button" class="form-button" onclick="updateDoctor()">Update Doctor</button>
+        </div>
+      </div>
 
-    <h2>Service List</h2>
-    <ul id="service-list"></ul>
+      <div id="manage-users" class="section" style="display:none;">
+        <h2>Manage Users</h2>
+        <form id="user-form" class="form">
+          <label for="user-name" class="form-label">User Name:</label>
+          <input type="text" id="user-name" class="form-input" required>
+          <label for="user-password" class="form-label">Password:</label>
+          <input type="text" id="user-password" class="form-input" required>
+          <label for="user-role" class="form-label">Role:</label>
+          <select id="user-role" class="form-input">
+            <option value="true">Admin</option>
+            <option value="false">User</option>
+          </select>
 
-    <!-- Update Service Form -->
-    <div id="update-service-form" style="display:none;">
-      <h3>Update Service</h3>
-      <input type="hidden" id="update-service-id">
-      <label for="update-service-name">Service Name:</label>
-      <input type="text" id="update-service-name">
-      <label for="update-service-description">Description:</label>
-      <input type="text" id="update-service-description">
-      <label for="update-service-fee">Fee:</label>
-      <input type="number" id="update-service-fee">
-      <button type="button" onclick="updateService()">Update Service</button>
+          <button type="button" class="form-button" onclick="addUser()">Add User</button>
+        </form>
+
+        <h3>User List</h3>
+        <ul id="user-list" class="list"></ul>
+
+        <div id="update-user-form" class="form-container" style="display:none;">
+          <h3>Update User</h3>
+          <input type="hidden" id="update-user-id">
+          <label for="update-user-name" class="form-label">User Name:</label>
+          <input type="text" id="update-user-name" class="form-input">
+          <label for="update-user-password" class="form-label">Password:</label>
+          <input type="text" id="update-user-password" class="form-input">
+          <button type="button" class="form-button" onclick="updateUser()">Update User</button>
+        </div>
+      </div>
+
+      <div id="manage-services" class="section" style="display:none;">
+        <h2>Manage Services</h2>
+        <form id="service-form" class="form">
+          <label for="service-name" class="form-label">Service Name:</label>
+          <input type="text" id="service-name" class="form-input" required>
+          <label for="service-description" class="form-label">Description:</label>
+          <input type="text" id="service-description" class="form-input" required>
+          <label for="service-fee" class="form-label">Fee:</label>
+          <input type="number" id="service-fee" class="form-input" required>
+          <button type="button" class="form-button" onclick="addService()">Add Service</button>
+        </form>
+
+        <h3>Service List</h3>
+        <ul id="service-list" class="list"></ul>
+
+        <div id="update-service-form" class="form-container" style="display:none;">
+          <h3>Update Service</h3>
+          <input type="hidden" id="update-service-id">
+          <label for="update-service-name" class="form-label">Service Name:</label>
+          <input type="text" id="update-service-name" class="form-input">
+          <label for="update-service-description" class="form-label">Description:</label>
+          <input type="text" id="update-service-description" class="form-input">
+          <label for="update-service-fee" class="form-label">Fee:</label>
+          <input type="number" id="update-service-fee" class="form-input">
+          <button type="button" class="form-button" onclick="updateService()">Update Service</button>
+        </div>
+      </div>
     </div>
-
-    <script src="admin.js"></script>
   </div>
 
+  <script src="admin.js"></script>
   <script>
-    // Sign out function
-    function signOut() {
-      document.getElementById('login-form').style.display = 'block'; // Show login form
-      document.getElementById('admin-panel').style.display = 'none'; // Hide admin panel
+    // Show specific section based on the option selected from sidebar
+    function showSection(sectionId) {
+      // Hide all sections
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => section.style.display = 'none');
+
+      // Show the selected section
+      document.getElementById(sectionId).style.display = 'block';
     }
+   
   </script>
 </body>
 </html>
